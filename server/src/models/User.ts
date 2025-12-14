@@ -11,6 +11,14 @@ export interface User {
   role: UserRole;
   status: UserStatus;
   organizationId?: Types.ObjectId;
+  homePoint?: {
+    type: 'Point';
+    coordinates: [number, number];
+  };
+  officePoint?: {
+    type: 'Point';
+    coordinates: [number, number];
+  };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -23,6 +31,8 @@ const UserSchema = new Schema<User>(
     role: { type: String, enum: ['user', 'admin'], required: true, default: 'user' },
     status: { type: String, enum: ['pending', 'approved', 'rejected'], required: true, default: 'pending' },
     organizationId: { type: Schema.Types.ObjectId, ref: 'Organization' },
+    homePoint: { type: { type: String, enum: ['Point'] }, coordinates: { type: [Number] } },
+    officePoint: { type: { type: String, enum: ['Point'] }, coordinates: { type: [Number] } },
   },
   {
     timestamps: true,

@@ -4,6 +4,7 @@ import { config } from './config';
 import authRouter from './routes/auth';
 import adminRouter from './routes/admin';
 import ridesRouter from './routes/rides';
+import settingsRouter from './routes/settings';
 
 export function createApp() {
   const app = express();
@@ -30,6 +31,7 @@ export function createApp() {
   app.use('/api/auth', authRouter);
   app.use('/api/admin', adminRouter);
   app.use('/api/rides', ridesRouter);
+  app.use('/api/settings', settingsRouter);
 
   // Basic error handler
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
