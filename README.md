@@ -1,6 +1,6 @@
-## Office Commute Sharing Platform (MERN + amCharts + Maps)
+## CoMotion Sharing Platform (MERN + amCharts + Maps)
 
-Rush-hour focused office commute sharing for verified employees. Backend is Node/Express + MongoDB (Mongoose) with JWT auth and RBAC. Frontend is React + TypeScript (Vite) with Mapbox maps and amCharts 5 for admin analytics.
+Rush-hour focused CoMotion sharing for verified employees. Backend is Node/Express + MongoDB (Mongoose) with JWT auth and RBAC. Frontend is React + TypeScript (Vite) with Mapbox maps and amCharts 5 for admin analytics.
 
 ### Stack
 - Server: TypeScript, Express, Mongoose, JWT, Socket.io

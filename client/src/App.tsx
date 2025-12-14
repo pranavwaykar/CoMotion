@@ -26,7 +26,7 @@ function AppShell() {
   const location = useLocation();
   const isAuth = location.pathname.startsWith('/login') || location.pathname.startsWith('/register');
   useEffect(() => {
-    document.title = 'Office Commute';
+    document.title = 'CoMotion';
     const link: HTMLLinkElement = document.querySelector("link[rel~='icon']") || document.createElement('link');
     link.rel = 'icon';
     link.type = 'image/png';
@@ -39,8 +39,8 @@ function AppShell() {
         <AppBar position="static" elevation={0}>
           <Container maxWidth="lg">
             <Toolbar disableGutters sx={{ gap: 1 }}>
-              <img src={logoUrl} alt="Office Commute" style={{ height: 24, marginRight: 8 }} />
-              <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 800 }}>Office Commute</Typography>
+              <img src={logoUrl} alt="CoMotion" style={{ height: 24, marginRight: 8 }} />
+              <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 800 }}>CoMotion</Typography>
               <Button color="inherit" component={Link} to="/">Dashboard</Button>
               <Button color="inherit" component={Link} to="/offer">Offer Ride</Button>
               <Button color="inherit" component={Link} to="/request">Request Ride</Button>
