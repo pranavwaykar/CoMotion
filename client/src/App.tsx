@@ -7,6 +7,8 @@ import Dashboard from './pages/Dashboard';
 import OfferRide from './pages/OfferRide';
 import RequestRide from './pages/RequestRide';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminPending from './pages/AdminPending';
+import MyRides from './pages/MyRides';
 import { getToken, clearToken } from './lib/auth';
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
@@ -29,6 +31,7 @@ function App() {
             <Button color="inherit" component={Link} to="/offer">Offer Ride</Button>
             <Button color="inherit" component={Link} to="/request">Request Ride</Button>
             <Button color="inherit" component={Link} to="/admin">Admin</Button>
+            <Button color="inherit" component={Link} to="/my-rides">My Rides</Button>
             {getToken() ? (
               <Button color="inherit" onClick={() => { clearToken(); window.location.href = '/login'; }}>Logout</Button>
             ) : (
@@ -46,6 +49,8 @@ function App() {
             <Route path="/offer" element={<ProtectedRoute><OfferRide /></ProtectedRoute>} />
             <Route path="/request" element={<ProtectedRoute><RequestRide /></ProtectedRoute>} />
             <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/pending" element={<ProtectedRoute><AdminPending /></ProtectedRoute>} />
+            <Route path="/my-rides" element={<ProtectedRoute><MyRides /></ProtectedRoute>} />
           </Routes>
         </Container>
       </Box>

@@ -9,6 +9,42 @@ import { haversineDistanceKm } from '../utils/geo';
 const router = Router();
 router.use(requireAuth);
 
+// List my offers
+router.get('/offers/mine', async (req: AuthenticatedRequest, res) => {
+  const offers = await RideOfferModel.find({ driverId: req.user!.userId }).sort({ createdAt: -1 });
+  return res.json({ offers });
+});
+
+// Close an offer
+router.post('/offers/:id/close', async (req: AuthenticatedRequest, res) => {
+  const { id } = req.params;
+  const offer = await RideOfferModel.findOneAndUpdate(
+    { _id: id, driverId: req.user!.userId, status: 'active' },
+    { $set: { status: 'closed', seatsAvailable: 0 } },
+    { new: true }
+  );
+  if (!offer) return res.status(404).json({ error: 'Offer not found or already closed' });
+  return res.json({ offer });
+});
+
+// List my requests
+router.get('/requests/mine', async (req: AuthenticatedRequest, res) => {
+  const requests = await RideRequestModel.find({ passengerId: req.user!.userId }).sort({ createdAt: -1 });
+  return res.json({ requests });
+});
+
+// Cancel a request
+router.post('/requests/:id/cancel', async (req: AuthenticatedRequest, res) => {
+  const { id } = req.params;
+  const request = await RideRequestModel.findOneAndUpdate(
+    { _id: id, passengerId: req.user!.userId, status: { $in: ['pending', 'matched'] } },
+    { $set: { status: 'cancelled' } },
+    { new: true }
+  );
+  if (!request) return res.status(404).json({ error: 'Request not found or not cancellable' });
+  return res.json({ request });
+});
+
 const geoPointSchema = z.object({
   lng: z.number().min(-180).max(180),
   lat: z.number().min(-90).max(90),
