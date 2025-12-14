@@ -5,6 +5,7 @@ import { RideOfferModel } from '../models/RideOffer';
 import { RideRequestModel } from '../models/RideRequest';
 import { timeWindowsOverlap, isWithinRushHours } from '../utils/time';
 import { haversineDistanceKm } from '../utils/geo';
+import { AuditLogModel } from '../models/AuditLog';
 
 const router = Router();
 router.use(requireAuth);
@@ -87,6 +88,13 @@ router.post('/offers', async (req: AuthenticatedRequest, res) => {
     status: 'active',
   });
 
+  await AuditLogModel.create({
+    organizationId: req.user!.organizationId as any,
+    userId: req.user!.userId as any,
+    action: 'ride.offer.create',
+    metadata: { offerId: offer._id, period },
+  });
+
   // Broadcast new offer to org
   const io = req.app.get('io');
   if (req.user!.organizationId) {
@@ -124,6 +132,13 @@ router.post('/requests', async (req: AuthenticatedRequest, res) => {
     fromPoint: { type: 'Point', coordinates: [from.lng, from.lat] },
     toPoint: { type: 'Point', coordinates: [to.lng, to.lat] },
     status: 'pending',
+  });
+
+  await AuditLogModel.create({
+    organizationId: req.user!.organizationId as any,
+    userId: req.user!.userId as any,
+    action: 'ride.request.create',
+    metadata: { requestId: request._id, period },
   });
 
   const io = req.app.get('io');
@@ -215,6 +230,13 @@ router.post('/join', async (req: AuthenticatedRequest, res) => {
   requestDoc.status = 'matched';
   requestDoc.matchedOfferId = offerDoc._id;
   await requestDoc.save();
+
+  await AuditLogModel.create({
+    organizationId: req.user!.organizationId as any,
+    userId: req.user!.userId as any,
+    action: 'ride.match',
+    metadata: { requestId: requestDoc._id, offerId: offerDoc._id },
+  });
 
   const io = req.app.get('io');
   if (req.user!.organizationId) {

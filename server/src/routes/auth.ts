@@ -6,8 +6,20 @@ import { OrganizationModel } from '../models/Organization';
 import { UserModel } from '../models/User';
 import { config } from '../config';
 import { requireAuth, AuthenticatedRequest } from '../middleware/auth';
+import { AuditLogModel } from '../models/AuditLog';
+import rateLimit from 'express-rate-limit';
 
 const router = Router();
+
+// Rate limit: max 20 requests per 10 minutes per IP for auth endpoints
+const authLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+router.use(['/register', '/login'], authLimiter);
 
 const registerSchema = z.object({
   fullName: z.string().min(2),
@@ -57,6 +69,13 @@ router.post('/register', async (req, res) => {
     organizationId: org._id,
   });
 
+  await AuditLogModel.create({
+    organizationId: user.organizationId,
+    userId: user._id,
+    action: 'auth.register',
+    metadata: { domain, autoApproved: shouldAutoApprove, role },
+  });
+
   const token = jwt.sign(
     { userId: user._id.toString(), role: user.role, organizationId: user.organizationId?.toString() },
     config.jwtSecret,
@@ -84,6 +103,12 @@ router.post('/login', async (req, res) => {
   if (user.status !== 'approved') return res.status(403).json({ error: 'Awaiting admin approval' });
   const ok = await bcrypt.compare(password, user.passwordHash);
   if (!ok) return res.status(401).json({ error: 'Invalid credentials' });
+
+  await AuditLogModel.create({
+    organizationId: user.organizationId,
+    userId: user._id,
+    action: 'auth.login',
+  });
 
   const token = jwt.sign(
     { userId: user._id.toString(), role: user.role, organizationId: user.organizationId?.toString() },

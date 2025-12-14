@@ -1,0 +1,35 @@
+/* Animated gradient background with subtle blobs */
+.auth-bg {
+  min-height: 100vh;
+  background:
+    radial-gradient(900px 400px at 10% 10%, rgba(63, 81, 181, 0.15), transparent 60%),
+    radial-gradient(900px 400px at 90% 20%, rgba(124, 77, 255, 0.15), transparent 60%),
+    radial-gradient(700px 300px at 80% 90%, rgba(0, 191, 166, 0.12), transparent 60%),
+    linear-gradient(180deg, #f7f9fc 0%, #ffffff 100%);
+  position: relative;
+  overflow: hidden;
+}
+.auth-bg::before, .auth-bg::after {
+  content: '';
+  position: absolute;
+  width: 50vmax;
+  height: 50vmax;
+  left: -10vmax;
+  top: -10vmax;
+  background: radial-gradient(circle at center, rgba(127, 90, 240, 0.2), transparent 60%);
+  filter: blur(40px);
+  animation: floatBlob 16s ease-in-out infinite;
+}
+.auth-bg::after {
+  left: auto;
+  right: -10vmax;
+  top: 40%;
+  background: radial-gradient(circle at center, rgba(25, 118, 210, 0.18), transparent 60%);
+  animation-duration: 20s;
+}
+@keyframes floatBlob {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+  50% { transform: translateY(3%) translateX(2%) scale(1.03); }
+}
+
+
