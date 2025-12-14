@@ -7,6 +7,21 @@ Rush-hour focused CoMotion sharing for verified employees. Backend is Node/Expre
 - Client: React + Vite + TS, MUI, amCharts 5, react-map-gl (Mapbox)
 - DB: MongoDB (Docker)
 
+### Screenshots
+
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/4491b5ab-e739-4875-b9b1-375750cbbaa8" />
+
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/c198d41f-5752-48d6-adc8-20e82134b855" />
+
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/092c6978-dc41-4358-8fb1-caa6d7dbacfe" />
+
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/7cb538cf-22c9-4a34-bd7c-dfc9ecbdcc26" />
+
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/5b6d1b8a-3fc3-4db3-9a21-f7f4ad21831b" />
+
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/a0082fe7-edc7-485d-b238-79a6a78357fc" />
+
+
 ### Quick Start (local)
 1) Start MongoDB
 ```bash
