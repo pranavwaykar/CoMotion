@@ -17,9 +17,6 @@ Rush-hour focused CoMotion sharing for verified employees. Backend is Node/Expre
 
 <img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/7cb538cf-22c9-4a34-bd7c-dfc9ecbdcc26" />
 
-<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/a0082fe7-edc7-485d-b238-79a6a78357fc" />
-
-
 ### Quick Start (local)
 1) Start MongoDB
 ```bash
